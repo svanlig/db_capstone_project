@@ -1,0 +1,15 @@
+DELIMITER //
+DROP PROCEDURE IF EXISTS CancelOrder;
+CREATE TABLE IF NOT EXISTS CONFIRM (Confirmation VARCHAR(255));
+CREATE PROCEDURE CancelOrder(IN Order_ID INT)
+BEGIN
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM Orders where OrderID = Order_ID;
+INSERT INTO Confirm(Confirmation) 
+VALUES (CONCAT("Order ", Order_ID, " is Cancelled"));
+SELECT * FROM Confirm;
+SET SQL_SAFE_UPDATES = 1;
+END //
+DELIMITER ;
+CALL CancelOrder(8);
+
